@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐！</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(to right, #17202a, #34495e);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        div {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            animation: scaleIn 2s ease-out;
+        }
+
+        p {
+            font-size: 1.5em;
+            animation: fadeIn 3s ease-out;
+        }
+
+        @keyframes scaleIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // JavaScript Snowflakes Effect
+        const canvas = document.createElement('canvas');
+        document.body.appendChild(canvas);
+
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const snowflakes = [];
+        const snowflakeCount = 200;
+
+        class Snowflake {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedY = Math.random() * 3 + 1;
+            }
+
+            update() {
+                this.y += this.speedY;
+                if (this.y > canvas.height) {
+                    this.y = 0;
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function createSnowflakes() {
+            for (let i = 0; i < snowflakeCount; i++) {
+                snowflakes.push(new Snowflake());
+            }
+        }
+
+        function animateSnowflakes() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (const snowflake of snowflakes) {
+                snowflake.update();
+                snowflake.draw();
+            }
+            requestAnimationFrame(animateSnowflakes);
+        }
+
+        createSnowflakes();
+        animateSnowflakes();
+    </script>
+
+    <div>
+        <h1>张仪，生日快乐！🎉</h1>
+    </div>
+</body>
+</html>
+
